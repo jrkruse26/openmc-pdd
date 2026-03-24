@@ -24,7 +24,7 @@ ARG compile_cores=1
 ARG build_dagmc=off
 ARG build_libmesh=off
 
-FROM ubuntu:24.04 AS dependencies
+FROM debian:bookworm-20250428-slim AS dependencies
 
 ARG compile_cores
 ARG build_dagmc
