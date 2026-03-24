@@ -24,7 +24,7 @@ ARG compile_cores=1
 ARG build_dagmc=off
 ARG build_libmesh=off
 
-FROM debian:bookworm-slim AS dependencies
+FROM debian:bookworm-20250428-slim AS dependencies
 
 ARG compile_cores
 ARG build_dagmc
@@ -182,8 +182,8 @@ FROM dependencies AS build
 
 ENV HOME=/root
 
-ARG openmc_branch=deploy
-ENV OPENMC_REPO='https://github.com/itay-space/openmc.git'
+ARG openmc_branch=deploy_old
+ENV OPENMC_REPO='https://github.com/jrkruse26/openmc-pdd.git'
 
 ARG compile_cores
 ARG build_dagmc
@@ -194,7 +194,7 @@ ENV LIBMESH_INSTALL_DIR=$HOME/LIBMESH
 
 # clone and install openmc
 RUN mkdir -p ${HOME}/OpenMC && cd ${HOME}/OpenMC \
-    && git clone --shallow-submodules --recurse-submodules --single-branch -b ${openmc_branch} --depth=1 ${OPENMC_REPO} \
+    && git clone --shallow-submodules --recurse-submodules --single-branch -b ${openmc_branch} --depth=1 ${OPENMC_REPO} openmc\
     && mkdir build && cd build ; \
     if [ ${build_dagmc} = "on" ] && [ ${build_libmesh} = "on" ]; then \
         cmake ../openmc \
